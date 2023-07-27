@@ -1,0 +1,39 @@
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+
+d=pd.read_csv(r'Salary_data.csv')
+x=d.iloc[:,:-1].values
+y=d.iloc[:,1].values
+
+plt.scatter(x,y)
+plt.xlabel("Years of exp")
+plt.ylabel("Salary")
+plt.title("salary and Years of exp")
+plt.show()
+
+from sklearn.model_selection import train_test_split
+xtrain,xtest,ytrain,ytest=train_test_split(x,y,test_size=0.1,random_state=0)
+
+from sklearn.linear_model import LinearRegression
+l = LinearRegression()
+l.fit(xtrain, ytrain)
+print(l.coef_)
+ypred=l.predict(xtest)
+df=pd.DataFrame({'Actual':ytest,'Predicted':ypred})
+
+from sklearn import metrics
+print("Mean Absolute error",metrics.mean_absolute_error(ytest,ypred))
+print("Mean Squared error",metrics.mean_squared_error(ytest,ypred))
+print("Root Mean squared error",np.sqrt(metrics.mean_squared_error(ytest,ypred)))
+
+plt.scatter(xtrain,ytrain)
+plt.xlabel("Years of Experience")
+plt.ylabel("salary")
+plt.title("Salary data(training data)")
+plt.show()
+plt.scatter(xtest,ytest)
+plt.xlabel("Years of Experience")
+plt.ylabel("salary")
+plt.title("Salary data(testing data)")
+plt.show()
