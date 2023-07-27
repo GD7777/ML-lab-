@@ -1,0 +1,23 @@
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+d=pd.read_csv(r'userdata.csv')
+x=d.iloc[:,[2,3]].values
+y=d.iloc[:,[4]].values
+from sklearn.model_selection import train_test_split
+xtrain,xtest,ytrain,ytest=train_test_split(x,y,test_size=0.2,random_state=0)
+from sklearn.preprocessing import StandardScaler
+s=StandardScaler()
+xtrain=s.fit_transform(xtrain)
+xtest=s.transform(xtest)
+from sklearn.linear_model import LogisticRegression
+l= LogisticRegression()
+l.fit(xtrain, ytrain)
+ypred=l.predict(xtest)
+from sklearn.metrics import confusion_matrix
+cm=confusion_matrix(ytest,ypred)
+print(cm)
+from sklearn import metrics
+print("Precision",metrics.precision_score(ytest,ypred))
+print("recall",metrics.recall_score(ytest,ypred))
+print("accuracy",metrics.accuracy_score(ytest,ypred))
