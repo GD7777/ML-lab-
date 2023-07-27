@@ -1,0 +1,18 @@
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+d=pd.read_csv(r'social.csv')
+x=d.iloc[:,[2,3]].values
+y=d.iloc[:,[4]].values
+from sklearn.model_selection import train_test_split
+xtrain,xtest,ytrain,ytest=train_test_split(x,y,test_size=0.2,random_state=0)
+from sklearn.preprocessing import StandardScaler
+s=StandardScaler()
+xtrain=s.fit_transform(xtrain)
+xtest=s.transform(xtest)
+from sklearn.ensemble import RandomForestClassifier
+c= RandomForestClassifier(n_estimators = 10, criterion = 'entropy')
+c.fit(xtrain,ytrain)
+ypred=c.predict(xtest)
+from sklearn import metrics
+print("confusion matrix\n",metrics.confusion_matrix(ytest,ypred))
