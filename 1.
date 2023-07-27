@@ -37,3 +37,6 @@ plt.xlabel("Years of Experience")
 plt.ylabel("salary")
 plt.title("Salary data(testing data)")
 plt.show()
+
+
+.
